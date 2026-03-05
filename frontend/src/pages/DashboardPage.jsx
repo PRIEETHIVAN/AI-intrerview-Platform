@@ -43,10 +43,25 @@ export default function DashboardPage() {
 
   return (
     <div className="grid">
-      <section className="card">
-        <h2>Dashboard</h2>
-        <p>Overall Score: {data.overallScore}</p>
-        <p>Completed Interviews: {data.interviews}</p>
+      <section className="card hero-card">
+        <h2>Candidate Intelligence Dashboard</h2>
+        <p className="muted">
+          Track interview consistency, identify weak topics, and benchmark role readiness from one view.
+        </p>
+        <div className="metric-grid">
+          <article className="metric-tile">
+            <span>Overall Score</span>
+            <strong>{data.overallScore}</strong>
+          </article>
+          <article className="metric-tile">
+            <span>Completed Interviews</span>
+            <strong>{data.interviews}</strong>
+          </article>
+          <article className="metric-tile">
+            <span>Weak Topics</span>
+            <strong>{data.weakTopics.length}</strong>
+          </article>
+        </div>
         <div className="row">
           <Link to="/onboarding">
             <button>Onboarding</button>
@@ -87,6 +102,9 @@ export default function DashboardPage() {
               <strong>{readiness.targetRole}</strong> readiness: {readiness.readinessScore} (
               {readiness.readinessBand})
             </p>
+            <div className={`readiness-badge ${readiness.readinessBand.toLowerCase().replace(" ", "-")}`}>
+              {readiness.readinessBand}
+            </div>
             <p>
               Resume match: {readiness.components.resumeMatchScore} | Interview:{" "}
               {readiness.components.interviewScore} | Coding: {readiness.components.codingScore}

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { Navigate, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -13,6 +14,7 @@ import { useAuth } from "./context/AuthContext";
 
 export default function App() {
   const { user, logout } = useAuth();
+  const location = useLocation();
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "warm");
 
   useEffect(() => {
@@ -22,6 +24,9 @@ export default function App() {
 
   return (
     <div className="app-shell">
+      <div className="ambient ambient-a" />
+      <div className="ambient ambient-b" />
+      <div className="ambient ambient-c" />
       <a href="#main-content" className="skip-link">
         Skip to content
       </a>
@@ -29,11 +34,30 @@ export default function App() {
         <h1>AI Interview Platform</h1>
         {user && (
           <div className="topbar-right">
+            <nav className="nav-pills" aria-label="Primary">
+              <Link className={location.pathname === "/dashboard" ? "active" : ""} to="/dashboard">
+                Dashboard
+              </Link>
+              <Link className={location.pathname === "/resume" ? "active" : ""} to="/resume">
+                Resume
+              </Link>
+              <Link className={location.pathname === "/interview" ? "active" : ""} to="/interview">
+                Interview
+              </Link>
+              <Link className={location.pathname === "/coding" ? "active" : ""} to="/coding">
+                Coding
+              </Link>
+            </nav>
             <span>{user.name}</span>
-            <button onClick={() => setTheme((t) => (t === "warm" ? "slate" : "warm"))}>
+            <button
+              className="ghost-btn"
+              onClick={() => setTheme((t) => (t === "warm" ? "slate" : "warm"))}
+            >
               Theme: {theme}
             </button>
-            <button onClick={logout}>Logout</button>
+            <button className="danger-btn" onClick={logout}>
+              Logout
+            </button>
           </div>
         )}
       </header>

@@ -39,7 +39,10 @@ export default function UploadResumePage() {
     <div className="card">
       <h2>Resume Upload & Parsing</h2>
       <form onSubmit={upload}>
-        <input type="file" accept=".pdf" onChange={(e) => setFile(e.target.files?.[0])} />
+        <label className="file-drop">
+          <input type="file" accept=".pdf" onChange={(e) => setFile(e.target.files?.[0])} />
+          <span>{file ? `Selected: ${file.name}` : "Drop PDF here or click to upload"}</span>
+        </label>
         <button type="submit">Upload PDF</button>
       </form>
       {error && <p className="error">{error}</p>}

@@ -76,17 +76,20 @@ export default function InterviewPage() {
   };
 
   return (
-    <div className="card">
+    <div className="card interview-card">
       <h2>Real-Time Interview</h2>
       {!sessionId && <button onClick={start}>Start 30-Question Adaptive Interview</button>}
       {sessionId && question && (
         <>
+          <div className="progress-track" aria-label="Interview progress">
+            <span style={{ width: `${((progress + 1) / 30) * 100}%` }} />
+          </div>
           <p>
             Q{progress + 1}/30 | Skill: {question.skill} | Topic: {question.topic} | Difficulty:{" "}
-            {question.difficulty}
+            <span className={`difficulty-pill ${question.difficulty}`}>{question.difficulty}</span>
           </p>
           <p className="question">{question.question}</p>
-          <p>Timer: {timer}s</p>
+          <p className={`timer-chip ${timer < 25 ? "urgent" : ""}`}>Timer: {timer}s</p>
           <textarea
             ref={textareaRef}
             rows={8}
